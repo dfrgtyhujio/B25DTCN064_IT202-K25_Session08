@@ -71,7 +71,12 @@ inner join Category as c on b.category_id = c.category_id;
 select * from Book 
 order by price desc limit 2;
 
-select b.title, count(c.category_name) as count_book from Book as b
+select c.category_name, c.category_id, count(b.title) as count_book from Book as b
 inner join Category as c on b.category_id = c.category_id
-group by c.category_name
-having
+group by c.category_id
+having count(b.title) >= 2;
+
+select * from Book as b1
+where b1.price > (
+	select avg(b2.price) from Book as b2
+)
